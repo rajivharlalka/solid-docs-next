@@ -3,7 +3,7 @@ title: Props
 ---
 
 Props are a way to pass state from a parent component to a child component.
-These read-only properties are passed to components as attributes within JSX and are accessible within the component via the `props` object:
+They read-only properties passed to components as attributes within JSX and are accessible within the component via the `props` object:
 
 ```tsx
 function App() {
@@ -116,6 +116,6 @@ While it can be a useful pattern, it can also lead to problems.
 When components are nested deeply, passing props through each component can become difficult to manage.
 Additionally, this can lead to components receiving props that they do not need, unnecessary re-renders, and trouble refactoring.
 
-Since components in Solid do not own state, props are not needed to pass state between components, but may be used.
+Since components in Solid do not own state, props are not needed to pass state between components, but they can be used.
 Because of this, there may be times when you need to pass props through multiple layers of components.
 A common solution to this problem is to use [Context](/concepts/context) to pass state to deeply nested components without having to pass props through each component in between.
