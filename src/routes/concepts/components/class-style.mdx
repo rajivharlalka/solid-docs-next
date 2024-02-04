@@ -5,7 +5,7 @@ title: Class and Style
 Similar to HTML, Solid uses `class` and `style` attributes to style elements via [CSS (Cascading Style Sheets)](https://developer.mozilla.org/en-US/docs/Glossary/CSS).
 
 - **Class Attribute**: Enables styling one or more elements through CSS rules.
-- **Style Attribute**: Inline styles that style single elements.
+- **Style Attribute**: Inline styles that style *single* elements.
 
 ## Inline styling
 
@@ -34,7 +34,7 @@ This is because they are not reusable, and they can be difficult to maintain ove
 ## Classes
 
 The `class` attribute allows you to style one or more elements through CSS rules.
-This provides a more structured approach to styling, as it allows you to reuse styles across multiple elements.
+This provides a more structured approach to styling, as provides a way to reuse styles across multiple elements.
 
 Classes are defined in CSS files, which are then imported into the component files that use them.
 You can import these files using the `import` statement at the top of your component file.
@@ -58,10 +58,10 @@ const [theme, setTheme] = createSignal("light");
 
 <div class={theme() === "light" ? "light-theme" : "dark-theme"}>
 	This div's theme is determined dynamically!
-</div>;
+</div>
 ```
 
-[Props](/concepts/components/props) are another way to change styles.
+[Props](/concepts/components/props) provide another way to change styles.
 By passing props to components, you can adapt styles based on the component's usage or the data it receives:
 
 ```tsx
@@ -106,4 +106,4 @@ For a single conditional class, using `class` might be simpler but as the number
     Additionally, since `classList` is a pseudo-attribute, it doesn't work in prop spreads like `<div {...props} />` or in `<Dynamic>`.
 </Callout>
 
-For a guide on how to style your components, see [Styling Your Components](/guides/styling-your-components), where we cover the different ways to style your components using libraries such as [TailwindCSS](https://tailwindcss.com/).
+For a guide on how to style your components, see [Styling Your Components](/guides/styling-your-components), where we offer different ways to style your components using libraries such as [TailwindCSS](https://tailwindcss.com/).
