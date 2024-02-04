@@ -3,7 +3,7 @@ title: Basics
 ---
 
 Components are the building blocks of Solid applications.
-They are reusable and can be combined to create more complex applications.
+They are reusable and can be combined together to create complex applications.
 
 Components are functions that return [JSX](/concepts/understanding-jsx) elements:
 
@@ -62,28 +62,28 @@ App
 ```
 
 In nesting components, you can create a hierarchy of components that can be reused throughout the application.
-This allows for a more modular approach to building applications, as components can be reused in different contexts.
+This allows for a modular approach to building applications, as components can be reused in different contexts.
 
 ## Component lifecycles
 
 Components have a lifecycle that defines how they are created, updated, and destroyed.
-A Solid component's lifecycle is different from other frameworks, as it is tied to the [concept of reactivity](/essentials/intro-to-reactivity).
+A Solid component's lifecycle is different from other frameworks, as it is tied to the [concept of reactivity](/concepts/intro-to-reactivity).
 
 Where frameworks may re-run components on every state change, a Solid component's lifecycle is tied to its initial run.
-What this means is that a Solid component is only run once, when it is first rendered into the DOM.
+What this means is that a Solid component only runs once, when it is first rendered into the DOM.
 After that, the component is not re-run, even if the application's state changes.
 
 When the Solid component renders, it sets up a reactive system that monitors for state changes.
 When a state change occurs, the component will update the relevant areas without re-running the entire component.
-By bypassing the full component lifecycle on every state change, Solid has a more predictable behavior compared to frameworks that re-run functions on every update.
+By bypassing the full component lifecycle on every state change, Solid creates a more predictable behavior compared to frameworks that re-run functions on every update.
 
 Since the component's logic is not continuously visited, getting this setup right is important when working with Solid.
 
 ### Initialization & configuration
 
 When a component is first rendered into the DOM, the component function is executed.
-This is where you will set up the component's state and side-effects.
-This includes setting up [signals](/concepts/understanding-signals), [stores](/concepts/understanding-stores), [effects](/concepts/understanding-effects), and other reactive elements.
+This is where you will set up a component's state and side-effects.
+This includes setting up [signals](/concepts/signals), [stores](/concepts/stores), [effects](/concepts/effects), and other reactive elements.
 Since the logic in the component function is not continuously visited, it is important to set up the component correctly from the outset.
 
 Each component instance is independent of other instances, meaning that each component has its own state and side-effects.
@@ -112,7 +112,7 @@ This includes creating the `count` signal and the `console.log(count())` stateme
 In addition, the component's JSX is returned, which will be rendered into the DOM.
 
 After the component is rendered, the `console.log` statement will not be executed again, even if the component's state changes.
-However, because the component's JSX is reactive, each press of the button will update the DOM with the new value of `count`.
+However, because the component's JSX is reactive, each press of the button will continue updating the DOM with the new value of `count`.
 
 In essence, Solid splits the concerns:
 
@@ -122,7 +122,7 @@ In essence, Solid splits the concerns:
 ### Conditional rendering
 
 To display different content based on state or other criteria, you can use conditional rendering.
-Given that the component function is only executed once, conditional statements must be placed within the function body.
+Given that the component function is only executed once, conditional statements must be placed _within the function body_.
 This design ensures that conditional paths are clear and immediately understood.
 
 ```tsx
@@ -231,7 +231,7 @@ function App() {
 }
 ```
 
-This is the preferred way to import components, as it allows for better code readability and maintainability.
+This is the preferred way to import components, as it creates better code readability and maintainability.
 Additionally, it allows for multiple components to be imported from the same file.
 
 ```tsx
@@ -267,7 +267,7 @@ function App() {
 
 ### Importing Solid and its utilities
 
-To use Solid, you must import the Solid library.
+To use Solid, import the Solid library.
 The reactive primitives and utilities are exported from Solid's main module.
 
 ```tsx
@@ -280,4 +280,4 @@ However, some of Solid's utilities are exported from their own modules.
 import { createStore } from "solid-js/store"
 ```
 
-To see a full list of Solid's utilities, see the [API Reference](/reference).
+To see a full list of Solid's utilities, see the API Reference.
