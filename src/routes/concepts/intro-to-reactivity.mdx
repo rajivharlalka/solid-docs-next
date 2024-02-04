@@ -7,7 +7,7 @@ order: 1
 
 Reactivity powers the interactivity in Solid applications.
 This programming paradigm refers to a system's ability to respond to changes in data or state automatically.
-With Solid, reactivity is the basis of its design, ensuring application's stay up-to-date with its underlying data.
+With Solid, reactivity is the basis of its design, ensuring application's stay up-to-date with their underlying data.
 
 ## Importance of reactivity
 
@@ -102,7 +102,7 @@ function Counter() {
 ## State management
 
 State management is the process of managing the state of an application.
-This involves storing and updating data, as well as responding to the changes in it.
+Which involves storing and updating data, as well as responding to the changes in it.
 
 With Solid, state management is handled through signals and subscribers.
 Signals are used to store and update data, while subscribers are used to respond to changes in the data.
@@ -227,12 +227,12 @@ When a signal changes, the corresponding subscribers are not immediately updated
 Instead, the system waits for a specific event or task to complete before updating the subscribers.
 
 This is important in scenarios where subscribers depend on multiple signals.
-In these cases, updating one signal before another could result in data inconsistency.
+In these cases, updating one signal before another could result in data inconsistencies.
 For example, if a subscriber depends on two signals, it is important that the subscriber is updated after both signals have been updated.
-Rather, the system waits for both signals to be updated before updating the subscriber.
+In this case, the system waits for both signals to be updated prior to updating the subscriber.
 
 **Note:** When asynchronous reactivity is present, it is important to ensure that the system is able to handle the delay in updates.
-[`batch`](/reference/batch) can be used to delay an update so the subscriber runs after each signal has been updated.
+[`batch`](/reference/reactive-utilities/batch) can be used to delay an update so the subscriber runs after each signal has been updated.
 
 ## Key concepts
 
