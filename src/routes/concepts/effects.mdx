@@ -31,8 +31,8 @@ These can include signals, variables, props, context, or any other reactive valu
 When any of these change, the effect is notified and will run again to update its state.
 
 Upon initialization, an effect will run _once_, regardless of whether it has any dependencies.
-This is useful for setting up the effect and initializing variables or subscribing to [signals](/concepts/signals).
-After this run, the effect will only be triggered when any of its _dependencies_ change.
+This sets up the effect and initializes variables or subscribes to any [signals](/concepts/signals) within it.
+After this run, the effect will only be triggered when any of these _dependencies_ change.
 
 ```jsx
 createEffect(() => {
@@ -86,12 +86,11 @@ setCount(1) // Output: 1, "Hello"
 setMessage("World") // Output: 1, "World"
 ```
 
-    	<Callout>
-    				When a signal updates, it notifies all of its subscribers sequentially but the
-    *order can vary*. While effects are guaranteed to run when a signal updates,
-    the execution might **not** be instantaneous. This means that the order of
-    execution of effects is *not guaranteed* and should not be relied upon.
-    		</Callout>
+<Callout>
+	When a signal updates, it notifies all of its subscribers sequentially but the *order can vary*. 
+	While effects are guaranteed to run when a signal updates, the execution might **not** be instantaneous.
+	This means that the order of execution of effects is *not guaranteed* and should not be relied upon.
+</Callout>
 
 ### Nested effects
 
@@ -106,10 +105,10 @@ createEffect(() => {
 })
 ```
 
-The order of execution is important to note.
-An inner effect will _not_ affect the outer effect.
-Signals that are accessed within an inner effect, will _not_ be registered as dependencies for the outer effect.
-When the signal located within the inner effect changes, it will trigger only the _inner effect_ to re-run, not the outer one.
+The order of execution is important when using effects.
+An inner effect will _not_ affect the outer one.
+Signals that are accessed within the inner effect, will _not_ be registered as dependencies for the outer effect.
+Meaning, when the signal located within the inner effect changes, it will trigger only the _inner effect_ to re-run, not the outer one.
 
 ```jsx
 import { createSignal, createEffect } from "solid-js"
@@ -129,13 +128,13 @@ Additionally, it allows you to create effects that are only triggered when certa
 ## Lifecycle functions
 
 Effects have a lifecycle that can be managed using certain functions.
-These functions allow you to control the initialization and disposal of effects to build the type of behaviour that you need.
+These functions provide a way to control the initialization and disposal of effects to build the type of behaviour that you need.
 This can include running a side effect only once, or cleaning up a task when it is no longer needed.
 
 ### `onMount`
 
 In situations where you just want to run a side effect **once**, you can use the [`onMount`](/reference/onMount) function.
-This lifecycle function is similar to an effect, but it does not track any dependencies.
+This is similar to an effect, but it does not track any dependencies.
 Rather, once the component has been intialized, the `onMount` callback will be executed and will not run again.
 
 ```jsx
@@ -159,8 +158,8 @@ function Component() {
 ```
 
 `onMount` provides the assurance that the callback will only run once.
-If using an effect in this situation, there is no guarantee that it will only run once, which can lead to unexpected behaviour.
-This makes `onMount` useful for API calls and other side effects that only need to be run once per component instance.
+When using an effect, there is no guarantee that it will only run once, which can lead to an undesired behaviour.
+This makes `onMount` useful for API calls and other side effects where they only need to run once per component instance.
 
 ### `onCleanup`
 
@@ -185,9 +184,8 @@ function App() {
 }
 ```
 
-In this example, the `onCleanup` function is used to clear the interval that is set up in the effect.
-To avoid the interval from running indefinitely, the `onCleanup` function is used to clear the interval once the component unmounts.
+To avoid the interval from running indefinitely, the `onCleanup` function in this example is used to clear the interval once the component unmounts.
 
-`onCleanup` can be used to avoid memory leaks.
+`onCleanup` can also be used to avoid memory leaks.
 These occur when a component is unmounted, but references to it still exist and, as a result, could still be running in the background.
 Using `onCleanup` to remove any subscriptions or references to the component can help to avoid this issue.
