@@ -2,7 +2,7 @@
 title: Event Handlers
 ---
 
-Event handlers are functions that are called in response to a specific event occurring in the browser, such as when a user clicks or taps on an element.
+Event handlers are functions that are called in response to a specific event occurring in the browser, such as when a user clicks on an element.
 To add an event handler to an element, you can use the `on` prefix followed by the event name, and assign it a function.
 
 ```tsx
@@ -10,6 +10,7 @@ To add an event handler to an element, you can use the `on` prefix followed by t
 ```
 
 When using event handlers in Solid, they can be written using camelCase or all lowercase.
+**Note:** If you are using ESLint, you will get a _warning_ if you use lowercase.
 
 ```tsx
 <button onclick={handleClick}>Click me</button>
@@ -33,7 +34,6 @@ This means that event listeners are attached to the root element and events are 
 
 By keeping the number of event listeners to a minimum, events can be captured more effectively.
 This is especially useful when working with large lists of elements, such as in a table or list.
-
 
 Supported events such as `click`, `mouseover`, and `keydown` are just a few examples that are optimized in this way.
 To view the full list see the [references below](#delegated-events).
