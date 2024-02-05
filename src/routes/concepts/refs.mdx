@@ -2,21 +2,21 @@
 title: Refs
 ---
 
-Refs, or references, are a special attribute that can be attached to any element, and are used to reference a DOM element or a component instance.
-They are particularly useful when you need to access the DOM nodes directly or invoke methods on a component.
+Refs, or references, are special attributes that can be attached to any element, and used to reference a DOM element or a component instance.
+They are useful when direct access to DOM nodes is needed or invoking methods on a component.
 
 ## Accessing DOM elements
 
 One way of accessing DOM elements is through [element selectors](https://developer.mozilla.org/en-US/docs/Web/API/Document_object_model/Locating_DOM_elements_using_selectors) such as [`document.querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) or [`document.getElementById`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById).
 Since elements in Solid can be added or removed from the DOM based on state, you need to wait until the element is attached to the DOM before accessing it.
-This can be done by using [`onMount`](/reference/onMount) to wait until the element is attached to the DOM before accessing it:
+This can be done by using [`onMount`](/reference/lifecycle/on-mount), which waits until the element is attached to the DOM before accessing it.
 
-Accessing DOM elements through element selectors is not recommended for this reason.
-As elements with the same selectors are added and removed from the DOM, the first element that matches the selector will be returned, which may not be the element you want.
+**Note:** DOM elements through element selectors is not recommended.
+As elements with the same selectors are added and removed from the DOM, the first element that matches the selector will be returned, which may not be the desired element.
 
 ## JSX as a value
 
-When wanting to directly access the DOM element, you can use JSX as a value and assign it to a variable.
+When trying access the DOM element, JSX can be used as a value and assigned to a variable.
 
 ```jsx
 function Component() {
@@ -27,18 +27,20 @@ function Component() {
 ```
 
 This can be a convenient way to access the DOM element.
-It lets you access the element directly without having to wait until it is attached to the DOM, and it can be used multiple times without having to worry about duplicate selectors.
+It provides direct access to the element without having to wait until it is attached to the DOM.
+This method can be used multiple times without having to worry about duplicate selectors.
 
-The downside to this approach is it separates the element and any child elements that are created from it from the rest of the DOM.
-This removes the ability to access the element directly from the variable, and reading through components that use JSX as a value can be more difficult to understand.
+The downside to this approach is that it separates the element and any child elements that are created from it from the rest of the DOM.
+This removes the ability to access the element directly from the variable.
+Similarly, reading through components that use JSX as a value can be more difficult to understand.
 
 ## Refs in Solid
 
-Solid provides a ref system that allows you to access the DOM element directly without having to wait until it is attached to the DOM.
+Solid provides a ref system that gives access to the DOM element directly without having to wait until it is attached to the DOM.
 These assignments occur at _creation time_ prior to the element being added to the DOM.
-This provides access directly to the elements for manipulation, such as animations and event handling.
+This gives access directly to the elements for manipulation, such as animations and event handling.
 
-To use `ref`, you declare a variable and use it as the `ref` attribute:
+To use `ref`, declare a variable and use it as the `ref` attribute:
 
 ```tsx
 let myElement
@@ -46,16 +48,18 @@ let myElement
 ```
 
 <Callout>
-	In TypeScript, you must use a definitive assignment assertion. Since Solid
-	takes care of assigning the variable when the component is rendered, this
-	signals to TypeScript that the variable will be assigned, even if it can't
-	confirm it. ```tsx let myElement!: HTMLDivElement; ```
+	In TypeScript,a definitive assignment assertion must be used. 
+	Since Solid takes care of assigning the variable when the component is rendered, this signals to TypeScript that the variable will be assigned, even if it can't confirm it.
+	
+	 ```tsx 
+	 let myElement!: HTMLDivElement; 
+	 ```
 </Callout>
 
 ### Signals as refs
 
 [Signals](/concepts/signals) can also be used as refs.
-This is useful when you want to access the element directly, but the element may not exist when the component is first rendered, or may be removed from the DOM at some point.
+This helpful for when the element may not exist when the component is first rendered, or may be removed from the DOM at some point.
 
 ```jsx
 function App() {
@@ -78,9 +82,7 @@ In this example, the paragraph element is only rendered when the `show` signal i
 When the component initializes, the paragraph element does not exist, so the `element` variable is not assigned.
 Once the `show` signal is set to `true`, the paragraph element is rendered, and the `element` variable is assigned to the paragraph element.
 
-If you would like to see a detailed example of how refs are created and used, you can view an intera
-
-visit this [Solid playground example](https://playground.solidjs.com/anonymous/22a1abfa-a0f5-44a6-bbe6-40387cf63b95).
+To see a detailed example of how refs are created and used, visit this [Solid playground example](https://playground.solidjs.com/anonymous/22a1abfa-a0f5-44a6-bbe6-40387cf63b95).
 In this example, you can see when the `element` variable is assigned, and when it is removed.
 
 ## Forwarding refs
@@ -93,7 +95,7 @@ To forward a ref, you need to pass the ref to the child component, and then assi
 When a child component receives a `ref` attribute from its parent, the `ref` is passed as a callback function.
 This is regardless of whether the parent passed it as a simple assignment or a callback.
 
-Once the child component receives the `ref`, it can be assigned to the element that the child component wants to expose through the `ref` attribute.
+Once a child component receives the `ref`, it can be assigned to the element that the child component wants to expose through the `ref` attribute.
 To access the `ref` in the child component, it is passed as a prop:
 
 ```tsx
@@ -131,31 +133,33 @@ This forwards the reference to the parent component, giving it direct access to 
 ## Directives
 
 Directives allow the attachment of reusable behaviours to DOM elements.
-The [`use:`](/reference/use) prefix is used to denote these custom directives.
+The [`use:`](/reference/jsx-attributes/use) prefix is used to denote these custom directives.
 Unlike props or attributes, directives operate at a lower level through providing fine-grained control over the elements they are attached to.
 
-Directives are like callback refs but they enable two extra features:
+Directives are like callback refs but they provide two extra features:
 
 - Having multiple directives on an element.
 - Passing in reactive data to the callback.
 
 A directive is essentially a function with a specific signature:
 
-```typescript
-function directive(element: Element, accessor: () => any): void
+```ts
+	function directive(element: Element, accessor: () => any): void {
+		//...
+	}
 ```
 
 - `element`: The DOM element that the directive is applied to.
 - `accessor`: A function that gives access to the value(s) passed to the directive.
 
-The directive functions are called at render time, but are called before the element is added to the DOM.
+Directive functions are called at render time, but before before the element has been added to the DOM.
 Due to this order, elements are fully primed with their attributes, properties, or event listeners, therefore minimizing unexpected behaviors or premature interactions.
 
-Within directives, you're able to perform a variety of tasks, including:
+Within directives, a variety of tasks can be performed, including:
 
 - creating [signals](/concepts/signals)
 - initiating [effects](/concepts/side-effects)
 - adding [event listeners](/concepts/components/event-handlers)
 - and more.
 
-To learn more about directives and how they work with TypeScript, refer to our [TypeScript for Solid guide](/guides/typescript).
+To learn more about directives and how they work with TypeScript, refer to our [TypeScript for Solid guide](/configuration/typescript).
