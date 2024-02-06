@@ -19,10 +19,10 @@ Because of this, common pitfalls of traditional async handling, such as unrespon
 Upon the call, `createResource` returns a signal which has reactive properties like loading, error, latest, etc. 
 These properties can be used to conditionally render JSX based on the current reactive state.
 
-The fetcher function that is created makes a call to get a user, which is then passed in as an argument to `createResource`. 
+The fetcher function that is created makes a call to get the data, which is then passed in as an argument to `createResource`. 
 
 The signal returned from the `createResource` provides the properties that help can assist with conditional rendering based on the current reactive state:
-* `state`: The current status of the operation (`unresolved`, `pending`, `ready`, `refreshing`, or `errored`).
+* `state`: The current status of the operation (`unresolved`, `pending`, `ready`, `refreshing`, or `error`).
 * `loading`: Indicates that the operation is currently in progress via a `boolean`.
 * `error`: If the operation fails for any reason, this property will contain information about this error.
 It may be a string with an error message, or an object with more detailed information.
@@ -71,8 +71,8 @@ function App() {
 Whenever the signal value, `userId`, changes, the internal fetch method `fetchUser` gets triggered. 
 The properties of the `user` resource allow for conditional rendering based on the different states of the fetch process.
 
-The `Switch/Match` construct provides one way to manage these conditions. 
-When the fetch succeeds and user data is retrieved, the `user(`) condition becomes active, and its related block executes.
+[`Switch/Match`](/concepts/control-flow/conditional-rendering) provides one way to manage these conditions. 
+When the fetch succeeds and user data is retrieved, the `user()` condition becomes active, and its related block executes.
 However, if there's an error while fetching, the `user.error` block becomes `true`, leading to its corresponding `Match` block being shown. 
 
 In addition to the `error` property, the `loading` property offers a way to display a loading state to the user during the fetch operation.
@@ -81,7 +81,7 @@ In addition to the `error` property, the `loading` property offers a way to disp
 ## Calling multiple async events
 
 Although you can use `createResource` independently, Solid provides an alternative method for synchronizing the display of multiple asynchronous events. 
-`Suspense` is a component in Solid designed to act as a boundary. 
+[`Suspense`](/reference/components/suspense) is a component in Solid designed to act as a boundary. 
 It allows you to display a fallback placeholder while waiting for all asynchronous events to resolve, preventing the display of partially loaded content:
 
 ```jsx
@@ -122,7 +122,7 @@ function App() {
 
 `Suspense` has the ability to identify asynchronous reads within its descendants and act accordingly.
 This feature helps to remove any intermediate components that may otherwise be displayed during partial loading states.
-Additionally, you can nest as many components as needed within `Suspense` but only the closest ancestor will switch to the `fallback` state when a loading state is detected.
+Additionally, you can nest as many components as needed within `Suspense`, only the closest ancestor will switch to the `fallback` state when a loading state is detected.
 
 <EraserLink
 	href="https://app.eraser.io/workspace/maDvFw5OryuPJOwSLyK9?elements=kMt6qc0qF9MlG2K9P28pOQ"
