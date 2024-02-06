@@ -134,7 +134,7 @@ If you wish to change the entry point file from `index.jsx` to `index.tsx`, you 
 
 Solid is written in TypeScript, meaning everything is typed out of the box.
 
-The [API Documentation](/references) details the types of API calls.
+The API Documentation details the types of API calls.
 In addition, there are several helpful definitions to make it easier for specifying explicit types.
 
 ### Signals
@@ -148,9 +148,10 @@ const [count, setCount] = createSignal<number>()
 Here, `createSignal` has the return type `Signal<number | undefined>`, which corresponds to the type passed into it, and `undefined` as it was uninitialized.
 This resolves to a getter-setter [tuple](https://www.typescriptlang.org/docs/handbook/2/objects.html#tuple-types), both of which are generically typed:
 
-```typescript
+```ts
 import type { Signal, Accessor, Setter } from "solid-js"
 type Signal<T> = [get: Accessor<T>, set: Setter<T>]
+
 ```
 
 In Solid, a signal's getter, like `count`, is essentially a function that returns a specific type.
@@ -160,12 +161,13 @@ Since the signal was not initialized, its initial state is `undefined`, therefor
 The corresponding setter, `setCount`, has a more complex type:
 
 ```ts
-Setter<number | undefined>.
+Setter<number | undefined>
 ```
 
 Essentially, this type means that the function can accept either a direct number or another function as its input.
 If provided with a function, that function can take the signal's previous value as its parameter and return a new value.
-Both the initial and resulting values can be a number or `undefined`. Importantly, calling `setCount` without any arguments will reset the signal's value to `undefined`.
+Both the initial and resulting values can be a number or `undefined`. 
+Importantly, calling `setCount` without any arguments will reset the signal's value to `undefined`.
 
 When using the function form of the setter, the signal's current value will always be passed to the callback as the sole argument.
 Additionally, the return type of the setter will align with the type of value passed into it, echoing the behavior expected from a typical assignment operation.
@@ -197,10 +199,11 @@ Just as signals use `createSignal<T>`, context uses `createContext<T>`, which is
 
 ```tsx
 type Data = { count: number; name: string }
+
 ```
 
 When invoking `useContext(dataContext)`, the type contained within the context is returned.
-For example, if the context is `Context<Data | undefined>`, then with using `useContext` a result of type `Data | undefined` will return.
+For example, when using `useContext` with the context type `Context<Data | undefined>`, the returned result will be of the type `Data | undefined`.
 The `| undefined` signifies that the context may not be defined in the component's ancestor hierarchy.
 
 `dataContext` will be understood as `Context<Data | undefined>` by Solid.
@@ -282,7 +285,7 @@ Trying to pass unneccessary props or children will result in type errors:
 
 ```tsx
 // in counter.tsx
-const Counter: Component = () => {
+const Counter: Component<CounterProps> = () => {
 	const [count, setCount] = createSignal(0)
 	return <button onClick={() => setCount((c) => c + 1)}>{count()}</button>
 }
@@ -394,7 +397,8 @@ const onInput: JSX.EventHandler<HTMLInputElement, InputEvent> = (event) => {
 }
 
 // Then attach handler to an input element:
-;<input onInput={onInput} />
+<input onInput={onInput} />
+
 ```
 
 #### Inline handlers
@@ -578,7 +582,7 @@ Casting can also be a solution so long as the assumption is valid:
 return <div>{user() && (user() as User).name}</div>
 ```
 
-It's worth noting that runtime type errors may arise from doing this.
+It is worth noting that runtime type errors may arise from doing this.
 This may happen when passing a type-cast value to a component, which discards information that may be nullish followed by accessing it asynchronously, such as in an event handler or timeout, or in `onCleanup`.
 
 `<Show>` only excludes `null`, `undefined`, and `false` from `when` when using the callback form.
@@ -644,8 +648,6 @@ By default, using native events like `mousemove` with the `on` prefix — for ex
 This occurs because these native events are not part of Solid's custom event type definitions.
 To solve this, `CustomEvents` and `CustomCaptureEvents` interfaces can be extended to include events from the `HTMLElementEventMap`:
 
-To include all native events:
-
 ```ts
 declare module "solid-js" {
 	namespace JSX {
@@ -670,8 +672,8 @@ declare module "solid-js" {
 
 #### Forcing properties and custom attributes
 
-In Solid, the [`prop:___`]() directive allows explicit property setting, which is useful for retaining the original data types like objects or arrays.
-[`attr:___`]() directive allows custom attributes, on the other hand, and it is effective for handling string-based HTML attributes.
+In Solid, the [`prop:___`](/reference/jsx-attributes/prop) directive allows explicit property setting, which is useful for retaining the original data types like objects or arrays.
+[`attr:___`](/reference/jsx-attributes/attr) directive allows custom attributes, on the other hand, and it is effective for handling string-based HTML attributes.
 
 ```ts
 declare module "solid-js" {
