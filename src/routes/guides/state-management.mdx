@@ -75,7 +75,7 @@ Additionally, signals are reactive, which means as long as it is accessed within
 ## Rendering state in the UI
 
 To achieve a dynamic user interface, the UI must be able to reflect the current state of the data.
-The UI is the visual representation of the state to the user, and is rendered using JSX.
+The UI is the visual representation of the state to the user, and is [rendered using JSX](/concepts/understanding-jsx).
 JSX provides a tracking scope, which keeps the view in sync with the state.
 
 Revisiting the `Counter` component presented earlier, rendering the current state of `count` is done within the return body using JSX:
@@ -183,7 +183,7 @@ function Counter() {
 }
 ```
 
-While this approach works, it can be inefficient as the `doubleCount` signal will be re-evaluated on every render.
+While this approach works, it can be inefficient as the `squaredCount` signal will be re-evaluated on every render.
 When a function is computationally expensive, or used multiple times within a component, this can lead to performance issues.
 To avoid this, Solid introduced [Memos](/concepts/derived-values/memos):
 
