@@ -10,7 +10,7 @@ Solid also supports a range of styling methods - from traditional CSS preprocess
 
 ### SASS
 
-[SASS](https://sass-lang.com/) is a popular CSS preprocessor that makes authoring CSS easier. 
+[SASS](https://sass-lang.com/) is a popular CSS preprocessor. 
 It is a superset of CSS and offers two syntaxes: SCSS and the indented syntax (often referred to as just "SASS").
 
 #### Installation
@@ -186,7 +186,7 @@ function Component() {
 }
 ```
 
-3. **Using a single style:** If you only need one style from the module, import and apply it directly:
+3. **Using a single style:** If you only need one style from the module, import the file to directly apply it:
 
 ```jsx
 // component.jsx
@@ -292,7 +292,8 @@ const Button = styled('button', {
   },
 });
 ```
-Variants can be added using the `variants` key:
+
+Style variants can be added using the `variants` key:
 
 ```jsx
 import { styled } from '@macaron-css/solid';
@@ -365,12 +366,15 @@ pnpm i --save-dev tailwindcss postcss autoprefixer
 # or
 
 yarn add --dev tailwindcss postcss autoprefixer
+```
 
-# Initialize
+2. Initialize TailwindCSS by running the following command:
 
+```bash
 npx tailwindcss init -p
 ```
-2. Since TailwindCSS is configuration-driven, after initializing, a `tailwind.config.js` file will be created at the root of your project directory:
+
+3. Since TailwindCSS is configuration-driven, after initializing, a `tailwind.config.js` file will be created at the root of your project directory:
 
 ```js
 /** @type {import('tailwindcss').Config} */
@@ -395,7 +399,7 @@ In your `src/index.css` file, add the following Tailwind directives:
 @tailwind utilities;
 ```
 
-These directives inform PostCSS that you're using Tailwind and establish the order of the directives. You can append custom CSS below these directives.
+These directives inform PostCSS that you are using Tailwind and establish the order of the directives. You can append custom CSS below these directives.
 
 #### Import TailwindCSS
 
@@ -512,7 +516,6 @@ render(() => <App />, document.getElementById('root') as HTMLElement);
 Alternatively, you can use the alias `import "virtual:uno.css"`:
 
 ```jsx
-/* @refresh reload */
 import "virtual:uno.css"
 import { render } from 'solid-js/web';
 import './index.css';
